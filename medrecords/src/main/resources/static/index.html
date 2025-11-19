@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MedRecords Demo</title>
+</head>
+<body>
+<h1>MedRecords Demo</h1>
+
+<!-- Register Patient -->
+<h2>Register Patient</h2>
+Name: <input id="regName"><br>
+Email: <input id="regEmail"><br>
+Password: <input type="password" id="regPassword"><br>
+<button onclick="registerPatient()">Register</button>
+<p id="regResult"></p>
+
+<hr>
+
+<!-- Upload File -->
+<h2>Upload File</h2>
+Patient ID: <input id="uploadPatientId"><br>
+File: <input type="file" id="fileInput"><br>
+<button onclick="uploadFile()">Upload</button>
+<p id="uploadResult"></p>
+
+<hr>
+
+<!-- Add Record -->
+<h2>Add Record</h2>
+Patient ID: <input id="recordPatientId"><br>
+Doctor Name: <input id="recordDoctor"><br>
+File Name: <input id="recordFileName"><br>
+File ID: <input id="recordFileId"><br>
+<button onclick="addRecord()">Add Record</button>
+<p id="recordResult"></p>
+
+<hr>
+
+<script>
+  const baseUrl = 'http://localhost:8080';
+
+  function registerPatient() {
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+
+      fetch(baseUrl + '/patients/register', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name, email, password})
+      }).then(res => res.json())
+        .then(data => document.getElementById('regResult').innerText = JSON.stringify(data))
+        .catch(err => console.log(err));
+  }
+
+  function uploadFile() {
+      const patientId = document.getElementById('uploadPatientId').value;
+      const file = document.getElementById('fileInput').files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      fetch(baseUrl + '/files/upload', {
+          method: 'POST',
+          body: formData
+      }).then(res => res.text())
+        .then(fileId => document.getElementById('uploadResult').innerText = `File ID: ${fileId}`)
+        .catch(err => console.log(err));
+  }
+
+  function addRecord() {
+      const patientId = document.getElementById('recordPatientId').value;
+      const doctorName = document.getElementById('recordDoctor').value;
+      const fileName = document.getElementById('recordFileName').value;
+      const fileId = document.getElementById('recordFileId').value;
+
+      fetch(baseUrl + '/records/add', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({patientId, doctorName, fileName, fileId})
+      }).then(res => res.json())
+        .then(data => document.getElementById('recordResult').innerText = JSON.stringify(data))
+        .catch(err => console.log(err));
+  }
+</script>
+</body>
+</html>
