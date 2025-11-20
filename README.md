@@ -175,7 +175,7 @@ This application was developed as part of an academic research project exploring
 
 Secure cloud-based medical record retention
 
-User-owned lifelong health data management
+User-owned lifelong health data management.
 
 Web-based medical data interoperability
 
