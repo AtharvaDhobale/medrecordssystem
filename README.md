@@ -1,4 +1,9 @@
 🏥 Secure Digital System for Lifelong Medical Record Management
+Team Members-
+Atharva Dhobale
+Harshika Rawat
+Prathmesh Barse
+Mentor-Dr. Jagannath Nalavade
 
 A production-ready, research-driven web application designed to securely store, access, and manage lifelong medical records.
 The system enables users to upload, view, download, and delete their health documents through a secure, cloud-ready architecture, ensuring privacy, reliability, and long-term accessibility.
@@ -77,12 +82,8 @@ Docker (optional)
 ├── docs/                    # Architecture diagrams, research notes, screenshots
 ├── .gitignore
 ├── README.md
-└── LICENSE (optional)
 
-⚙️ Installation & Setup
-1️⃣ Clone the Repository
-git clone https://github.com/<your-username>/<repo>.git
-cd <repo>
+
 
 2️⃣ Backend Setup (Spring Boot)
 cd backend
