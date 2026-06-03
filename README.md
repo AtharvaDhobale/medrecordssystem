@@ -1,8 +1,8 @@
 🏥 Secure Digital System for Lifelong Medical Record Management
 Team Members-
-Atharva Dhobale
-Harshika Rawat
-Prathmesh Barse
+Atharva Dhobale,
+Harshika Rawat,
+Prathmesh Barse,
 Mentor-Dr. Jagannath Nalavade
 
 A production-ready, research-driven web application designed to securely store, access, and manage lifelong medical records.
