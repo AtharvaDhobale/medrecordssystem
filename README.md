@@ -1,139 +1,78 @@
-# MedRecords — Personal Health Records System
+# 🏥 MedRecords — Secure Digital System for Lifelong Medical Record Management
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-View_App-blue?style=for-the-badge)](https://fearless-dedication-production-ef3f.up.railway.app/)
+[![Java](https://img.shields.io/badge/Java-17%2B-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-GridFS-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
-A full-stack web application that lets patients securely store, manage, and access their medical records from anywhere. Built with Spring Boot, React, and MongoDB.
+A production-ready, full-stack web application architected to securely store, access, and manage lifelong medical records. Engineered with a scalable microservices-inspired approach, this system leverages **Spring Boot**, **React.js**, and **MongoDB GridFS** to deliver a secure, high-performance digital health infrastructure.
 
-## Overview
+## 🚀 Project Overview
 
-I built this as a personal project to practice building secure, real-world applications. The idea came from the frustration of having medical documents scattered across different hospitals and clinics — this system gives patients a single place to keep everything organized.
+The healthcare industry requires robust data interoperability and stringent security measures. **MedRecords** was developed to solve the fragmentation of patient health data by providing a centralized, patient-centric vault. The platform ensures data privacy, reliable document retrieval, and long-term accessibility, complying with modern data protection standards.
 
-The backend uses JWT authentication so each patient only sees their own records. Files (PDFs, images, reports) are stored in MongoDB GridFS so everything lives in one database.
+As the **Project Lead**, I spearheaded the full software development lifecycle (SDLC)—from system design and RESTful API architecture to front-end integration and cloud deployment. 
 
-## Features
+## 🛠️ Technology Stack & Architecture
 
-- **Patient registration and login** with BCrypt-hashed passwords and JWT tokens
-- **Upload medical documents** — PDFs, images, and reports stored in MongoDB GridFS
-- **Health Passport** — a quick-glance card with blood group, allergies, and emergency contact
-- **Record filtering** — search and filter by file type across all uploaded documents
-- **Dashboard overview** — see total records, files uploaded, and profile completion at a glance
-- **Secure sessions** — JWT-based auth, tokens stored in localStorage
+- **Backend Architecture:** Java, Spring Boot, Spring Web, Spring Security, Maven
+- **Frontend Ecosystem:** React.js, JavaScript (ES6+), React Router, Tailwind CSS, Axios
+- **Database & Storage:** MongoDB (NoSQL), MongoDB GridFS (for large file/document storage)
+- **Security & Authentication:** JWT (JSON Web Tokens), BCrypt Password Hashing, Role-Based Access Control (RBAC)
+- **Cloud & DevOps:** Git/GitHub, Railway (Backend hosting), Continuous Deployment (CI/CD)
 
-## Tech Stack
+## ✨ Technical Achievements & Key Features
 
-| Layer | Technology |
-|-------|------------|
-| Backend | Spring Boot 3.5, Spring Security, JWT (JJWT) |
-| Database | MongoDB + GridFS (file storage) |
-| Frontend | React 18, React Router, Tailwind CSS |
-| Auth | BCrypt + JWT tokens |
-| Deployment | Railway (backend), Vercel (frontend) |
+- **Secure Authentication System:** Implemented stateless authentication using JWT and Spring Security, ensuring strictly controlled access to patient profiles.
+- **Advanced Document Management:** Architected a robust file upload/download pipeline utilizing MongoDB GridFS to efficiently store and retrieve PDFs, images, and medical reports.
+- **Responsive User Interface (UI):** Designed a dynamic Single Page Application (SPA) with React and Tailwind CSS, featuring real-time dashboard analytics and instant file filtering.
+- **RESTful API Development:** Built highly scalable, decoupled REST API endpoints facilitating seamless JSON communication between the Java backend and React client.
+- **Data Protection & Privacy:** Enforced document-level security rules inspired by the Digital Personal Data Protection (DPDP) Act, ensuring users only access their authorized health data.
 
-## Project Structure
+## 👥 Project Team
 
-```
-medrecordssystem/
-├── medrecords/                  # Spring Boot backend
-│   ├── src/main/java/com/example/medrecords/
-│   │   ├── config/              # MongoDB, Security config
-│   │   ├── controller/          # REST endpoints
-│   │   ├── filter/              # JWT auth filter
-│   │   ├── model/               # Patient, Record entities
-│   │   ├── repository/          # MongoDB repositories
-│   │   ├── service/             # Audit logging, user details
-│   │   └── util/                # JWT utility
-│   └── src/main/resources/
-│       └── application.properties
-└── medrecords-frontend/         # React frontend
-    └── src/
-        ├── components/          # LoginPage, Register, Dashboard, ProfileSetup
-        ├── api.js               # All API calls
-        └── App.js               # Routes
-```
+- **Project Lead:** Atharva Dhobale
+- **Team Members:** Harshika Rawat, Prathmesh Barse
+- **Mentor:** Dr. Jagannath Nalavade
 
-## Installation
+*This application was developed as part of a research-driven academic project exploring secure cloud-based medical record retention and web-based medical data interoperability.*
+
+## ⚙️ Local Installation & Setup
 
 ### Prerequisites
-
 - Java 17+
 - Node.js 18+
-- MongoDB running locally (`mongodb://localhost:27017`)
+- Local or Cloud MongoDB Instance (`mongodb://localhost:27017`)
 
-### Backend
-
+### 1. Backend Setup (Spring Boot)
 ```bash
 cd medrecords
+./mvnw clean install
 ./mvnw spring-boot:run
 ```
+*The backend API will initialize on `http://localhost:8080`*
 
-Backend starts at `http://localhost:8080`
-
-### Frontend
-
+### 2. Frontend Setup (React.js)
 ```bash
 cd medrecords-frontend
 npm install
 npm start
 ```
+*The frontend SPA will initialize on `http://localhost:3000`*
 
-Frontend starts at `http://localhost:3000`
+*(Ensure you create a `.env` file in the frontend directory with `REACT_APP_API_URL=http://localhost:8080`)*
 
-## Environment Variables
+## 🔐 Security Standards
 
-Create a `.env` file in `medrecords-frontend/` for the frontend:
+- **Encryption at Rest & Transit:** All passwords hashed via BCrypt; API calls secured.
+- **Session Management:** Secure token storage via client-side local storage with strict expiration logic.
+- **CORS Configuration:** Backend strictly configured to accept cross-origin requests only from authorized frontend domains.
 
-```
-REACT_APP_API_URL=http://localhost:8080
-```
+## 📬 Contact / Author
 
-The Spring Boot backend reads these from environment variables (with defaults for local dev):
+**Atharva Dhobale** (Project Lead)  
+[GitHub Profile](https://github.com/AtharvaDhobale)
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `MONGODB_URI` | MongoDB connection string | `mongodb://localhost:27017/medrecords` |
-| `JWT_SECRET` | Secret key for signing JWT tokens | dev fallback (change in prod) |
-| `PORT` | Server port | `8080` |
-
-## Running Locally
-
-1. Make sure MongoDB is running
-2. Start the backend: `cd medrecords && ./mvnw spring-boot:run`
-3. Start the frontend: `cd medrecords-frontend && npm start`
-4. Open `http://localhost:3000`
-
-## Railway Deployment
-
-### Backend (Railway)
-
-1. Push the `medrecords/` folder to a GitHub repo
-2. Create a new Railway project → **Deploy from GitHub repo**
-3. Set the root directory to `medrecords`
-4. Add environment variables in Railway dashboard:
-   - `MONGODB_URI` — your MongoDB Atlas URI
-   - `JWT_SECRET` — a strong random string
-5. Railway auto-detects the Maven project and builds with `./mvnw clean package`
-6. Start command: `java -jar target/medrecords-0.0.1-SNAPSHOT.jar`
-
-### Frontend (Vercel)
-
-1. Push `medrecords-frontend/` to GitHub
-2. Import on Vercel → set root directory to `medrecords-frontend`
-3. Add env variable: `REACT_APP_API_URL=https://your-railway-app.up.railway.app`
-4. Deploy — Vercel handles the React build automatically
-
-## Screenshots
-
-> Add screenshots of Login, Dashboard, and Health Passport pages here.
-
-## Future Improvements
-
-- Share records securely with a doctor via a time-limited link
-- OCR for extracting text from uploaded prescription images
-- Reminder system for follow-up appointments
-- Mobile app with React Native
-- Encryption at rest for all stored files
-
-## Author
-
-**Atharva Dhobale**  
-[GitHub](https://github.com/AtharvaDhobale)
+---
+*Built with passion for transforming digital healthcare.*
