@@ -1,5 +1,7 @@
 # MedRecords — Personal Health Records System
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-View_App-blue?style=for-the-badge)](https://fearless-dedication-production-ef3f.up.railway.app/)
+
 A full-stack web application that lets patients securely store, manage, and access their medical records from anywhere. Built with Spring Boot, React, and MongoDB.
 
 ## Overview
@@ -133,5 +135,5 @@ The Spring Boot backend reads these from environment variables (with defaults fo
 
 ## Author
 
-**Mohammed Athar**  
-[GitHub](https://github.com/yourusername) · [LinkedIn](https://linkedin.com/in/yourusername)
+**Atharva Dhobale**  
+[GitHub](https://github.com/AtharvaDhobale)
