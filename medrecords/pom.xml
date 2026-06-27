@@ -15,15 +15,13 @@
 	<artifactId>medrecords</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>medrecords</name>
-	<description>Hospital Records Management System</description>
+	<description>Medical Records Management System</description>
 
-	<!-- Keep Java aligned with compiler (IntelliJ-friendly). If you use JDK 21, change this to 21. -->
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
-		<!-- MongoDB (includes modern driver with SRV support) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -34,7 +32,6 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		<!-- JJWT: api at compile, impl/jackson at runtime -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -86,7 +83,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<!-- Use 'release' for consistent compilation -->
 					<release>${java.version}</release>
 				</configuration>
 			</plugin>

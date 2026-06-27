@@ -1,17 +1,23 @@
+// src/components/ProfileSetup.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function ProfileSetup() {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    age: "",
-    bloodGroup: "",
-    weight: "",
-    height: "",
-    gender: "",
-    emergencyContact: "",
-    medicalHistory: "",
-    allergies: ""
+  const patientId = localStorage.getItem("patientId") || "default";
+  
+  const [formData, setFormData] = useState(() => {
+    const saved = localStorage.getItem(`patientProfile_${patientId}`);
+    return saved ? JSON.parse(saved) : {
+      age: "",
+      bloodGroup: "",
+      weight: "",
+      height: "",
+      gender: "",
+      emergencyContact: "",
+      medicalHistory: "",
+      allergies: ""
+    };
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -41,8 +47,9 @@ function ProfileSetup() {
 
   const handleComplete = async () => {
     setIsLoading(true);
-    // Here you would save the profile data to the backend
-    // For now, we'll just navigate to dashboard
+    // Save to local storage for dynamic rendering on the dashboard
+    localStorage.setItem(`patientProfile_${patientId}`, JSON.stringify(formData));
+    
     setTimeout(() => {
       setIsLoading(false);
       navigate("/dashboard");
@@ -52,33 +59,31 @@ function ProfileSetup() {
   const renderStep1 = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
+        <div className="w-14 h-14 bg-[#E2ECE9] text-[#1B4332] rounded-2xl flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+          1
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">Basic Information</h2>
-        <p className="text-gray-600">Let's start with some basic details</p>
+        <h2 className="text-2xl font-bold text-[#1A1A18] font-serif-premium">Basic Information</h2>
+        <p className="text-sm text-[#605E59]">Help us document your physical attributes</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Age</label>
           <input
             type="number"
-            placeholder="Enter your age"
+            placeholder="e.g. 28"
             value={formData.age}
             onChange={(e) => handleInputChange('age', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105"
+            className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Gender</label>
           <select
             value={formData.gender}
             onChange={(e) => handleInputChange('gender', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105"
+            className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200 bg-white"
           >
             <option value="">Select gender</option>
             {genders.map(gender => (
@@ -90,24 +95,24 @@ function ProfileSetup() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Height (cm)</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Height (cm)</label>
           <input
             type="number"
-            placeholder="Enter your height"
+            placeholder="e.g. 175"
             value={formData.height}
             onChange={(e) => handleInputChange('height', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105"
+            className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Weight (kg)</label>
           <input
             type="number"
-            placeholder="Enter your weight"
+            placeholder="e.g. 70"
             value={formData.weight}
             onChange={(e) => handleInputChange('weight', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105"
+            className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200"
           />
         </div>
       </div>
@@ -117,21 +122,19 @@ function ProfileSetup() {
   const renderStep2 = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <div className="w-16 h-16 bg-gradient-to-r from-green-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
+        <div className="w-14 h-14 bg-[#E2ECE9] text-[#1B4332] rounded-2xl flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+          2
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">Medical Information</h2>
-        <p className="text-gray-600">Help us understand your medical background</p>
+        <h2 className="text-2xl font-bold text-[#1A1A18] font-serif-premium">Medical Information</h2>
+        <p className="text-sm text-[#605E59]">Help clinical providers understand your history</p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Blood Group</label>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Blood Group</label>
         <select
           value={formData.bloodGroup}
           onChange={(e) => handleInputChange('bloodGroup', e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105"
+          className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200 bg-white"
         >
           <option value="">Select blood group</option>
           {bloodGroups.map(group => (
@@ -141,24 +144,24 @@ function ProfileSetup() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Allergies</label>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Allergies</label>
         <textarea
-          placeholder="List any allergies you have (e.g., Penicillin, Nuts, Pollen)"
+          placeholder="List any known allergies (e.g. Penicillin, Pollen, Peanuts)"
           value={formData.allergies}
           onChange={(e) => handleInputChange('allergies', e.target.value)}
           rows={3}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105 resize-none"
+          className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200 resize-none"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Medical History</label>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Medical History</label>
         <textarea
-          placeholder="Briefly describe any significant medical history (e.g., Diabetes, Heart condition)"
+          placeholder="Briefly list existing conditions (e.g. Hypertension, Asthma, Type 2 Diabetes)"
           value={formData.medicalHistory}
           onChange={(e) => handleInputChange('medicalHistory', e.target.value)}
           rows={3}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105 resize-none"
+          className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200 resize-none"
         />
       </div>
     </div>
@@ -167,36 +170,33 @@ function ProfileSetup() {
   const renderStep3 = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-          </svg>
+        <div className="w-14 h-14 bg-[#E2ECE9] text-[#1B4332] rounded-2xl flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+          3
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">Emergency Contact</h2>
-        <p className="text-gray-600">Who should we contact in case of emergency?</p>
+        <h2 className="text-2xl font-bold text-[#1A1A18] font-serif-premium">Emergency Contact</h2>
+        <p className="text-sm text-[#605E59]">In case of emergencies, who should we notify?</p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Emergency Contact</label>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-[#605E59] mb-2">Contact Name & Phone</label>
         <input
           type="text"
-          placeholder="Name and phone number of emergency contact"
+          placeholder="e.g. Jane Doe - 9876543210"
           value={formData.emergencyContact}
           onChange={(e) => handleInputChange('emergencyContact', e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:scale-105"
+          className="w-full px-4 py-3 border border-[#E6E4DD] rounded-xl focus:ring-2 focus:ring-[#1B4332] focus:border-transparent transition-all duration-200"
         />
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="bg-[#F0F5F3] border border-[#D5E5DF] rounded-xl p-5">
         <div className="flex items-start">
-          <svg className="w-5 h-5 text-blue-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-[#2D6A4F] mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div>
-            <h3 className="text-sm font-medium text-blue-800">Privacy Notice</h3>
-            <p className="text-sm text-blue-700 mt-1">
-              All your medical information is encrypted and stored securely. 
-              Only you and authorized healthcare providers can access this data.
+            <h3 className="text-sm font-semibold text-[#1B4332]">Security & Privacy</h3>
+            <p className="text-xs text-[#605E59] mt-1 leading-relaxed">
+              This information is stored on your secure medical file container. It is fully encrypted at rest and is only visible to you and clinic entities you choose to authorize.
             </p>
           </div>
         </div>
@@ -205,91 +205,80 @@ function ProfileSetup() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#FAF9F5] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-2xl">
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600'
+        
+        {/* Progress Tracker Bar */}
+        <div className="mb-8 flex flex-col items-center space-y-4">
+          <div className="flex items-center justify-between w-full max-w-md">
+            <div className="flex items-center space-x-2">
+              <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
+                step >= 1 ? 'bg-[#1B4332] text-[#FAF9F5]' : 'bg-[#E6E4DD] text-[#605E59]'
               }`}>
                 1
-              </div>
-              <div className={`w-16 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600'
+              </span>
+              <div className={`w-16 h-0.5 ${step >= 2 ? 'bg-[#1B4332]' : 'bg-[#E6E4DD]'}`}></div>
+              <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
+                step >= 2 ? 'bg-[#1B4332] text-[#FAF9F5]' : 'bg-[#E6E4DD] text-[#605E59]'
               }`}>
                 2
-              </div>
-              <div className={`w-16 h-1 mx-2 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600'
+              </span>
+              <div className={`w-16 h-0.5 ${step >= 3 ? 'bg-[#1B4332]' : 'bg-[#E6E4DD]'}`}></div>
+              <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
+                step >= 3 ? 'bg-[#1B4332] text-[#FAF9F5]' : 'bg-[#E6E4DD] text-[#605E59]'
               }`}>
                 3
-              </div>
+              </span>
             </div>
             <button
               onClick={handleSkip}
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              className="text-xs font-semibold text-[#605E59] hover:text-[#1B4332] transition-colors"
             >
-              Skip for now
+              Skip configuration
             </button>
-          </div>
-          <div className="text-center">
-            <p className="text-sm text-gray-600">
-              Step {step} of 3 - {step === 1 ? 'Basic Information' : step === 2 ? 'Medical Information' : 'Emergency Contact'}
-            </p>
           </div>
         </div>
 
-        {/* Form Content */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 animate-fade-in">
+        {/* Wizard Card */}
+        <div className="bg-white rounded-2xl border border-[#E6E4DD] p-8 shadow-sm animate-fade-in">
           {step === 1 && renderStep1()}
           {step === 2 && renderStep2()}
           {step === 3 && renderStep3()}
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8">
+          {/* Action Row */}
+          <div className="flex justify-between items-center mt-10 pt-6 border-t border-[#FAF9F5]">
             <button
               onClick={handlePrevious}
               disabled={step === 1}
-              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 border border-[#E6E4DD] rounded-xl text-sm font-semibold text-[#605E59] hover:bg-[#FAF9F5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              Previous
+              Back
             </button>
 
-            <div className="flex space-x-4">
-              <button
-                onClick={handleSkip}
-                className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                Skip
-              </button>
-              
+            <div className="flex space-x-3 items-center">
               {step < 3 ? (
                 <button
                   onClick={handleNext}
-                  className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+                  className="px-6 py-2.5 bg-[#1B4332] text-[#FAF9F5] rounded-xl text-sm font-semibold hover:bg-[#2D6A4F] transition-all"
                 >
-                  Next
+                  Continue
                 </button>
               ) : (
                 <button
                   onClick={handleComplete}
                   disabled={isLoading}
-                  className="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                  className="px-6 py-2.5 bg-[#1B4332] text-[#FAF9F5] rounded-xl text-sm font-semibold hover:bg-[#2D6A4F] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-[#FAF9F5]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Completing...
+                      Finalizing...
                     </>
                   ) : (
-                    "Complete Setup"
+                    "Save & Finish"
                   )}
                 </button>
               )}
@@ -298,11 +287,12 @@ function ProfileSetup() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-8">
-          <p className="text-sm text-gray-500">
-            Your information is secure and encrypted
+        <div className="text-center mt-6">
+          <p className="text-xs text-[#605E59]">
+            Step {step} of 3 • MedRecords Patient Setup Wizard
           </p>
         </div>
+
       </div>
     </div>
   );
