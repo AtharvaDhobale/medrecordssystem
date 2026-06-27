@@ -10,13 +10,22 @@ const authHeaders = () => {
   };
 };
 
+// Debug helper — logs raw server response before parsing
+async function safeJson(res) {
+  const text = await res.text();
+  console.log("[API DEBUG] status:", res.status, "body:", text);
+  if (!text) throw new Error(`Empty response from server (HTTP ${res.status})`);
+  try { return JSON.parse(text); }
+  catch { throw new Error(`Non-JSON response: ${text.substring(0, 200)}`); }
+}
+
 export async function loginPatient(email, password) {
   const res = await fetch(`${API_BASE}/patients/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  const data = await res.json();
+  const data = await safeJson(res);
   if (res.ok && data.token) {
     localStorage.setItem("authToken", data.token);
     localStorage.setItem("patientId", data.patient.id);
@@ -31,7 +40,7 @@ export async function registerPatient(name, email, password) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
   });
-  const data = await res.json();
+  const data = await safeJson(res);
   if (res.ok && data.token) {
     localStorage.setItem("authToken", data.token);
     localStorage.setItem("patientId", data.patient.id);
