@@ -1,10 +1,20 @@
 # 🏥 MedRecords — Secure Digital System for Lifelong Medical Record Management
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-View_App-blue?style=for-the-badge)](https://fearless-dedication-production-ef3f.up.railway.app/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-View_App-success?style=for-the-badge&logo=render&logoColor=white&color=24c875)](https://medrecords-frontend.onrender.com/)
 [![Java](https://img.shields.io/badge/Java-17%2B-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-GridFS-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+
+---
+
+### 🌐 Live Deployment
+> [!IMPORTANT]
+> **Experience the live application here:** **[https://medrecords-frontend.onrender.com/](https://medrecords-frontend.onrender.com/)**
+> 
+> *The backend is hosted on **Render** (as a secure Docker container) connected to a cloud-managed **MongoDB Atlas** database cluster. The frontend is deployed as a high-availability React static site.*
+
+---
 
 A production-ready, full-stack web application architected to securely store, access, and manage lifelong medical records. Engineered with a scalable microservices-inspired approach, this system leverages **Spring Boot**, **React.js**, and **MongoDB GridFS** to deliver a secure, high-performance digital health infrastructure.
 
@@ -20,7 +30,7 @@ As the **Project Lead**, I spearheaded the full software development lifecycle (
 - **Frontend Ecosystem:** React.js, JavaScript (ES6+), React Router, Tailwind CSS, Axios
 - **Database & Storage:** MongoDB (NoSQL), MongoDB GridFS (for large file/document storage)
 - **Security & Authentication:** JWT (JSON Web Tokens), BCrypt Password Hashing, Role-Based Access Control (RBAC)
-- **Cloud & DevOps:** Git/GitHub, Railway (Backend hosting), Continuous Deployment (CI/CD)
+- **Cloud & DevOps:** Git/GitHub, Docker, Render (Backend & Frontend hosting), MongoDB Atlas (Cloud Database), Continuous Deployment (CI/CD)
 
 ## ✨ Technical Achievements & Key Features
 
