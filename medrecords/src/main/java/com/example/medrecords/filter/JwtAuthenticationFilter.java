@@ -26,6 +26,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        String method = request.getMethod();
+        // Skip JWT filter for public endpoints and CORS preflight
+        return "OPTIONS".equalsIgnoreCase(method)
+            || path.equals("/patients/login")
+            || path.equals("/patients/register")
+            || path.equals("/test");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
                                   FilterChain filterChain) throws ServletException, IOException {
         
