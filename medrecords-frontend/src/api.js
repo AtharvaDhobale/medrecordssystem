@@ -1,4 +1,5 @@
 const API_BASE = process.env.REACT_APP_API_URL || "https://medrecordssystem-production.up.railway.app";
+console.log("[API DEBUG] API_BASE =", API_BASE);
 
 const getToken = () => localStorage.getItem("authToken");
 
